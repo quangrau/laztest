@@ -56,19 +56,21 @@ define(['angular', 'lodash', 'angular-ui-router'], function(angular, _) {
 
         var deffered = $q.defer();
 
-        $http.get('http://www.corsproxy.com/' + product.url.replace('http://', '')).then(function(res) {
+        $http.get('http://www.corsproxy.com/' + product.url.replace('http://', '')).
+          then(function(res) {
+            // Wraps a raw DOM element or HTML string as a jQuery element.
+            pageElement = angular.element(res.data);
 
-          // Wraps a raw DOM element or HTML string as a jQuery element.
-          pageElement = angular.element(res.data);
+            // call function to parseHTML from url
+            var detail = parseData(pageElement);
 
-          // call function to parseHTML from url
-          var detail = parseData(pageElement);
+            $scope.products_detail.push(detail);
 
-          $scope.products_detail.push(detail);
+            deffered.resolve(detail);
 
-          deffered.resolve(detail);
-
-        });
+          }, function(res) {
+            deffered.reject('can not get data.');
+          });
 
         return deffered.promise;
 
@@ -82,11 +84,13 @@ define(['angular', 'lodash', 'angular-ui-router'], function(angular, _) {
       if (urlForm.$invalid) {
         return false;
       }
-      
-      // Init scope
+
+      // Init scope state
       $scope.product_info = [];
       $scope.products_detail = [];
       $scope.isWaiting = true;
+      $scope.showProduct = false;
+      $scope.parse_error = false;
 
       // call function compare products
       compareProducts().then(function(products_detail) {
@@ -103,6 +107,9 @@ define(['angular', 'lodash', 'angular-ui-router'], function(angular, _) {
         $scope.products_detail = data;
         $scope.isWaiting = false;
         $scope.showProduct = true;
+      }, function(reason) {
+        $scope.isWaiting = false;
+        $scope.parse_error = 'Something wrong! You should try again with other urls.';
       });
     }
   }

@@ -13,9 +13,8 @@
     </div>
   </div>
   <hr/>
-  
+  <div class="alert alert-danger" ng-show="parse_error.length">{{parse_error}}</div>
   <div class="row" ng-show="showProduct">
-    <div class="alert alert-danger">{{parse_error}}</div>
     <div class="col-md-12">
       <p>Compare Results:</p>
       <table class="table table-bordered table-striped table-hover">
