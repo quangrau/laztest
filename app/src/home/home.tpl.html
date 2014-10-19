@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <form name="urlForm">
+        <div ng-repeat="(key, product) in products">
+          <inputcompare key="{{key+1}}" url="product.url"></inputcompare>
+        </div>
+
+        <div class="form-group" ng-hide="isWaiting">
+          <button class="btn btn-primary" ng-click="compare(urlForm)">Compare</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <hr/>
+  
+  <div class="row" ng-show="showProduct">
+    <div class="alert alert-danger">{{parse_error}}</div>
+    <div class="col-md-12">
+      <p>Compare Results:</p>
+      <table class="table table-bordered table-striped table-hover">
+        <tbody>
+          <tr>
+            <td>Hình ảnh</td>
+            <td>
+              <img ng-src="{{ product_info[0][1] }}" class="img-thumbnail" alt="">
+            </td>
+            <td>
+              <img ng-src="{{ product_info[1][1] }}" class="img-thumbnail" alt="">
+              </td>
+          </tr>
+          <tr>
+            <td class="col-md-4">Tên sản phẩm</td>
+            <td class="col-md-4">{{ product_info[0][0] }}</td>
+            <td class="col-md-4">{{ product_info[1][0] }}</td>
+          </tr>
+          <tr data-ng-repeat="key in keys">
+            <td>{{key}}</td>
+            <td>{{ products_detail[0][$index] }}</td>
+            <td>{{ products_detail[1][$index] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div id="mask-waiting" ng-show="isWaiting">
+    <div class="msg">
+      <h3>parsing... </h3>
+      <h3><img src="/images/loading-cylon.svg" alt=""></h3>
+    </div>
+</div>
