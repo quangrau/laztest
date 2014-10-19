@@ -1,0 +1,13 @@
+
+main.js
+----------------
+jquery.js
+angular.js
+angular-resource.js
+angular-ui-router.js
+ui-bootstrap-tpls.js
+bootstrap.js
+common/directive.js
+lodash.js
+home/home.js
+main.js
